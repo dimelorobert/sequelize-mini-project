@@ -1,4 +1,4 @@
-# Sequelize mini-project training
+# Sequelize Mini-Project training
 Proyecto para poner en practica el ORM "Sequelize"
 
 ![Sequelize](https://github.com/dimelorobert/sequelize-mini-project/blob/main/public/images/sequelize.jpg)
