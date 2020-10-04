@@ -1,4 +1,4 @@
-# Sequelize Mini-Project
+# Sequelize Mini-Project training
 Proyecto para poner en practica el ORM "Sequelize"
 
-![Sequelize](https://blog.intive-fdv.com.ar/wp-content/uploads/2016/07/sequelize-768x377.png)
+![Sequelize](https://github.com/dimelorobert/sequelize-mini-project/blob/main/public/images/sequelize.jpg)
