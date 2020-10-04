@@ -1,0 +1,27 @@
+{
+  "name": "films-api",
+  "version": "1.0.0",
+  "description": "Api para practicar con el ORM \"Sequelize\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimelorobert/sequelize-mini-project.git"
+  },
+  "keywords": [
+    "films",
+    "Api",
+    "sequelize"
+  ],
+  "author": "Robert Hernandez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dimelorobert/sequelize-mini-project/issues"
+  },
+  "homepage": "https://github.com/dimelorobert/sequelize-mini-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
