@@ -1,27 +1,41 @@
 {
-  "name": "films-api",
-  "version": "1.0.0",
-  "description": "Api para practicar con el ORM \"Sequelize\"",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dimelorobert/sequelize-mini-project.git"
-  },
-  "keywords": [
-    "films",
-    "Api",
-    "sequelize"
-  ],
-  "author": "Robert Hernandez",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dimelorobert/sequelize-mini-project/issues"
-  },
-  "homepage": "https://github.com/dimelorobert/sequelize-mini-project#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+    "name": "films-api",
+    "version": "1.0.0",
+    "description": "Api para practicar con el ORM \"Sequelize\"",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon ./src/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dimelorobert/sequelize-mini-project.git"
+    },
+    "keywords": [
+        "films",
+        "Api",
+        "sequelize"
+    ],
+    "author": "Robert Hernandez",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dimelorobert/sequelize-mini-project/issues"
+    },
+    "homepage": "https://github.com/dimelorobert/sequelize-mini-project#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-promise-router": "^4.0.1",
+        "mysql2": "^2.2.5",
+        "path": "^0.12.7",
+        "sequelize": "^6.3.5"
+    },
+    "devDependencies": {
+        "cors": "^2.8.5",
+        "eslint": "^7.10.0",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.4",
+        "prettier": "^2.1.2"
+    }
 }
