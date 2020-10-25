@@ -1,10 +1,9 @@
 'use strict';
-const { Sequelize } = require('sequelize');
-const { database } = require('../config');
 
-const sequelize = new Sequelize(database.database, database.username, database.password, {
-    host: database.host,
-    dialect: "mysql"
-});
+const testConnectionDB = require('./testConnectionDB');
+const structureDB = require('./structureDB');
 
-module.exports = sequelize;
+module.exports = {
+    testConnectionDB,
+    structureDB
+};

@@ -1,8 +1,9 @@
 'use strict';
 
+const { usersControllerCreate } = require('../controllers');
 const routerx = require('express-promise-router');
-const userRouter = require('./usersRoutes');
 const router = routerx();
 
-router.use('/users', userRouter);
+router.post('/create', usersControllerCreate.create);
+
 module.exports = router;

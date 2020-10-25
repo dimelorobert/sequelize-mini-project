@@ -1,18 +1,20 @@
 {
-    "name": "films-api",
+    "name": "phonebook-api",
     "version": "1.0.0",
-    "description": "Api para practicar con el ORM \"Sequelize\"",
+    "description": "Api agenda para practicar con el ORM \"Sequelize\"",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon ./src/index.js"
+        "start": "nodemon ./src/index.js",
+        "dbtest": "node ./src/database/testConnectionDB.js",
+        "datadb": "node ./src/database/structureDB.js"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/dimelorobert/sequelize-mini-project.git"
     },
     "keywords": [
-        "films",
+        "phonebook",
         "Api",
         "sequelize"
     ],
@@ -26,10 +28,18 @@
         "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "express-fileupload": "^1.2.0",
         "express-promise-router": "^4.0.1",
+        "file-system": "^2.2.2",
+        "fs-extra": "^9.0.1",
+        "joi": "^17.3.0",
+        "joi-phone-number": "^5.0.0",
+        "jsonwebtoken": "^8.5.1",
         "mysql2": "^2.2.5",
         "path": "^0.12.7",
-        "sequelize": "^6.3.5"
+        "sass": "^1.27.0",
+        "sequelize": "^6.3.5",
+        "sharp": "^0.26.2"
     },
     "devDependencies": {
         "cors": "^2.8.5",
