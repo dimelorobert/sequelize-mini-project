@@ -31,7 +31,7 @@ module.exports = {
         try {
             // Validamos los datos que nos envia el usuario
             await usersSchema.validateAsync(request.body);
-            const {
+            let {
                 image,
                 name,
                 surname,
@@ -43,6 +43,15 @@ module.exports = {
                 mobile,
                 website,
             } = request.body;
+
+            // Manejamos los nulls o undefined  de los campos no requeridos y los procesamos para guardarlos en labase de datos formateados
+            surname = helpers.firstWordCapitalize(helpers.handleEmptyField(surname).toLowerCase());
+            genre = helpers.handleEmptyField(genre);
+            company = helpers.handleEmptyField(company);
+            address = helpers.firstWordCapitalize(helpers.handleEmptyField(address).toLowerCase());
+            email = helpers.handleEmptyField(email).toLowerCase();
+            phone = helpers.handleEmptyField(phone);
+            website = helpers.handleEmptyField(website).toLowerCase();
 
             // Procesamos la imagen que recibimos del lado del cliente, 3 parametros los cuales son (locationPath, fileImage, sizeImage)
             let savedFileName;
@@ -60,36 +69,50 @@ module.exports = {
             } else {
                 savedFileName = image;
             }
-            // Procesamos va para evitar espacios al principio y al final que el usuario nos pueda enviar
-            const nameTrimmed = helpers.firstWordCapitalize(name.trim().toLowerCase());
-            const surnameTrimmed = helpers.firstWordCapitalize(surname.trim().toLowerCase());
-            const addressTrimmed = helpers.firstWordCapitalize(address.trim().toLowerCase());
 
+            // Procesamos va para evitar espacios al principio y al final que el usuario nos pueda enviar
+            const nameTrimmed = helpers.firstWordCapitalize(name.toLowerCase());
+            const mobileTrimmed = mobile.trim();
+
+            // Guardamos info en la base de datos
             const users = await UsersModel.create({
                 image: savedFileName,
                 name: nameTrimmed,
-                surname: surnameTrimmed,
+                surname: surname,
                 genre: genre,
                 company: company,
-                address: addressTrimmed,
+                address: address,
                 email: email,
                 phone: phone,
-                mobile: mobile,
+                mobile: mobileTrimmed,
                 website: website
             })
+
+            // Mandamos una respuesta en formato JSON
             response.send({
                 status: 200,
                 data: {
-                    users
+                    users: {
+                        image: savedFileName,
+                        name: nameTrimmed,
+                        surname: surname,
+                        genre: genre,
+                        company: company,
+                        address: address,
+                        email: email,
+                        phone: phone,
+                        mobile: mobileTrimmed,
+                        website: website
+                    }
                 },
                 message: `Se ha añadido el usuario con el ID Nº : ${users.id}`
             });
-            console.log(error.message);
 
         } catch (error) {
+            // Si hay algún error lo mandamos al middleware de errores
             next(error);
         } finally {
-            //connectionDB.close();
+            connectionDB.sync();
         }
     },
 };
