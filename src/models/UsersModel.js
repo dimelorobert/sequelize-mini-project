@@ -2,19 +2,25 @@
 
 // Desestructuramos Datatypes del modulo de SEQUELIZE para poder formar la tabla en la base de datos
 const {
+    Sequelize,
     DataTypes
 } = require('sequelize');
 
 // Importamos la conexión a la base de datos
-const {connectionDB} = require('../config');
+const {
+    connectionDB
+} = require('../config');
 
+// importamos moduloque genera id alfanumerico aleatorios
+const shortid = require('shortid');
 
 // Definimos la estructura de la tabla en la base de datos
 const UsersModel = connectionDB.define('users', {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        defaultValue: shortid.generate,
         primaryKey: true,
-        autoIncrement: true,
+        allowNull: false,
     },
     image: {
         type: DataTypes.STRING,
@@ -32,7 +38,7 @@ const UsersModel = connectionDB.define('users', {
         type: DataTypes.ENUM('Masculino', 'Femenino', 'Otro'),
         allowNull: true,
         defaultValue: 'Otro'
-    
+
     },
     company: {
         type: DataTypes.STRING,
@@ -59,5 +65,19 @@ const UsersModel = connectionDB.define('users', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    created_at: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('NOW()'),
+        allowNull: true
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('NOW()'),
+        allowNull: true
+    },
 });
+
+
+
+
 module.exports = UsersModel;

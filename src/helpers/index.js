@@ -9,6 +9,9 @@ const uuid = require('uuid');
 
 
 const helpers = {
+  formatDateToDB: (date) => {
+    return format(date, `yyyy-MM-dd HH:mm:ss`);
+  },
   errorGenerator: (message, code) => {
     const error = new Error(message);
     if (code) error.httpCode = code;
@@ -40,8 +43,9 @@ const helpers = {
     return word[0].trim().toUpperCase() + word.slice(1);
   },
   handleEmptyField: (variable) => {
-    if (variable === null || variable === "" || variable === 'Otro') {
-       variable = undefined;
+    if (variable === null || variable === "" || variable === undefined) {
+      
+       variable = 'sin especificar';
     }
     return variable;
   },
