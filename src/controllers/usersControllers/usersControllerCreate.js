@@ -18,7 +18,10 @@ const {
     UsersModel
 } = require('../../models');
 
-// Importamos funciones Helpers para usar las funciones de firstWordCapitaly manejar los nulos que puedan venir del front
+// Importamos funciones Helpers :
+// firstWordCapitalize ( se encarga  de poner la primera letra de cada palabra en mayusculas)
+// handleEmptyField ( se encarga de gestinar los campos null || undefined  y los reemplaza por "Sin especificar")
+// processAndSavePhoto ( se encarga de procesar el fileImage que vengan de front )
 const {
     helpers
 } = require('../../helpers');
