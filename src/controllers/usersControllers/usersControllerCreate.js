@@ -35,7 +35,7 @@ const {
 
 
 // Ubicación de la carpeta usuarios don de se alojaran los archivos
-const userImagePathDir = path.join(__dirname, `../${USERS_UPLOADS_DIR}`);
+const userImagePathDir = path.join(__dirname, `../../${USERS_UPLOADS_DIR}`);
 
 
 module.exports = {
@@ -56,15 +56,18 @@ module.exports = {
                 website,
             } = request.body;
 
-            // Manejamos los nulls o undefined  de los campos no requeridos y los procesamos para guardarlos en la base de datos formateados
+            // Manejamos los nulls o undefined  de los campos no requeridos
+            // Formateamos info antes de guardarla en la base de datos
+            // Procesamos info evitando espacios al principio y al final, texto en mayusculas y demas...
+            name = helpers.firstWordCapitalize(name);
             image = helpers.handleEmptyField(image);
-            surname = helpers.firstWordCapitalize(helpers.handleEmptyField(surname).toLowerCase());
+            surname = helpers.firstWordCapitalize(helpers.handleEmptyField(surname));
             genre = helpers.handleEmptyFieldArray(genre);
             company = helpers.firstWordCapitalize(helpers.handleEmptyField(company));
-            address = helpers.firstWordCapitalize(helpers.handleEmptyField(address).toLowerCase());
+            address = helpers.firstWordCapitalize(helpers.handleEmptyField(address));
             email = helpers.handleEmptyField(email).toLowerCase();
             phone = helpers.handleEmptyField(phone);
-            mobile.trim();
+            mobile = mobile.trim();
             website = helpers.handleEmptyField(website).toLowerCase();
 
             // Procesamos la imagen que recibimos del lado del cliente, 3 parametros los cuales son (locationPath, fileImage, sizeImage)
@@ -81,21 +84,24 @@ module.exports = {
                     });
                 }
             } else {
+                // Creamos variable que se encargara de asignar una imagen aleatoria a cada usuario que no envie imagen
                 let randomImage = Math.floor(Math.random() * 8) + 1;
+
+                // Creacion del nombre del archivo ex: avatar-5.jpg
                 const avatarImage = 'avatar-' + `${randomImage}` + '.jpg';
+
+                // creamos path del archivo
                 const pathImageDefault = path.join(`./${AVATAR_DEFAULT}`, `./${avatarImage}`);
+
+                // Asignamos este valor a image y este a su vez a savedFileName para que salga de la condicion null || undefined con el valor que le hemos asigando por defecto
                 image = pathImageDefault;
                 savedFileName = image;
             }
 
-            // Procesamos va para evitar espacios al principio y al final que el usuario nos pueda enviar
-            const nameTrimmed = helpers.firstWordCapitalize(name.toLowerCase());
-
-
             // Insertamos la info en la base de datos
             const users = await UsersModel.create({
                 image: savedFileName,
-                name: nameTrimmed,
+                name: name,
                 surname: surname,
                 genre: genre,
                 company: company,
@@ -115,7 +121,7 @@ module.exports = {
                     users: {
                         id: users.id,
                         image: savedFileName,
-                        name: nameTrimmed,
+                        name: name,
                         surname: surname,
                         genre: genre,
                         company: company,

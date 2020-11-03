@@ -2,6 +2,7 @@
 
 //////////////// Modulos a usar /////////////////////////
 require('dotenv').config();
+const {PORT} = process.env;
 const express = require('express');
 const router = require('./routes');
 const bodyParser = require('body-parser');
@@ -9,7 +10,7 @@ const path = require('path');
 const fileUpload = require('express-fileupload');
 
 // Crear conexión  a la base de datos y crea las tablas 
-const database = require('./database');
+require('./database');
 
 const app = express();
 const morgan = require('morgan');
@@ -24,8 +25,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+/* Carpeta donde se alojaran todos los archivos publicos de la api no en si misma es decir con la ruta /public/uploads... NO
+si no,  que se accedera desde la carpeta que contiene es decir /uploads/users...*/
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Modulo que permite subir archivos a la api
 app.use(fileUpload());
+
+// Modulo controlador de las rutas de la api
 app.use('/', router);
 
 
@@ -48,10 +56,7 @@ app.use((request, response) => {
 
 //////////////// SERVER //////////////////////
 // Configuracion puertos server
-const {
-    PORT
-} = process.env;
-app.set('port', PORT || 3001);
+app.set('port', PORT || 3002);
 const port = app.get('port');
 app.listen(port, () => {
     console.log(`✔️ 🚀 >>>> Server working on PORT ${port}  <<<< 🚀 ✔️`);

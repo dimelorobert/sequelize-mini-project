@@ -30,7 +30,6 @@
         "express": "^4.17.1",
         "express-fileupload": "^1.2.0",
         "express-promise-router": "^4.0.1",
-        "file-system": "^2.2.2",
         "fs-extra": "^9.0.1",
         "joi": "^17.3.0",
         "joi-phone-number": "^5.0.0",
@@ -41,6 +40,7 @@
         "sanitize-html": "^2.1.1",
         "sass": "^1.27.0",
         "sequelize": "^6.3.5",
+        "sequelize-auto": "^0.6.6",
         "sharp": "^0.26.2",
         "shortid": "^2.2.16"
     },

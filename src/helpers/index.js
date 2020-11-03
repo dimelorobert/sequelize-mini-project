@@ -40,18 +40,22 @@ const helpers = {
     return savedFileName;
   },
   firstWordCapitalize: (word) => {
-    return word[0].trim().toUpperCase() + word.slice(1);
+    return word.toLowerCase()
+      .trim()
+      .split(' ')
+      .map(v => v[0].toUpperCase() + v.substr(1))
+      .join(' ');
   },
   handleEmptyField: (variable) => {
     if (variable === null || variable === "" || variable === undefined) {
-      
-       variable = 'sin especificar';
+
+      variable = 'sin especificar';
     }
     return variable;
   },
   handleEmptyFieldArray: (variable) => {
     if (variable === null || variable === undefined || variable === "") {
-       variable = 'Otro';
+      variable = 'Otro';
     }
     return variable;
   }

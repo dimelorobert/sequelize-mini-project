@@ -14,7 +14,7 @@ const {
 // importamos moduloque genera id alfanumerico aleatorios
 const shortid = require('shortid');
 
-// Definimos la estructura de la tabla en la base de datos
+// Definimos la estructura de la tabla de la base de datos
 const UsersModel = connectionDB.define('users', {
     id: {
         type: DataTypes.STRING,
