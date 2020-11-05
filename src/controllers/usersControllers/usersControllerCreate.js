@@ -57,6 +57,11 @@ module.exports = {
                 phone,
                 mobile,
                 website,
+                facebook,
+                instagram,
+                twitter,
+                youtube,
+                linkedin,
             } = request.body;
 
             // Manejamos los nulls o undefined  de los campos no requeridos
@@ -72,6 +77,12 @@ module.exports = {
             phone = helpers.handleEmptyField(phone);
             mobile = mobile.trim();
             website = helpers.handleEmptyField(website).toLowerCase();
+            facebook = helpers.handleEmptyField(facebook).toLowerCase();
+            instagram = helpers.handleEmptyField(instagram).toLowerCase();
+            twitter = helpers.handleEmptyField(twitter).toLowerCase();
+            youtube = helpers.handleEmptyField(youtube).toLowerCase();
+            linkedin = helpers.handleEmptyField(linkedin).toLowerCase();
+
 
             // Procesamos la imagen que recibimos del lado del cliente, 3 parametros los cuales son (locationPath, fileImage, sizeImage)
             let savedFileName;
@@ -113,6 +124,11 @@ module.exports = {
                 phone: phone,
                 mobile: mobile,
                 website: website,
+                facebook: facebook,
+                instagram: instagram,
+                twitter: twitter,
+                youtube: youtube,
+                linkedin: linkedin,
                 created_at: Sequelize.literal('NOW()'),
                 updated_at: Sequelize.literal('NOW()'),
             })
@@ -133,6 +149,11 @@ module.exports = {
                         phone: phone,
                         mobile: mobile,
                         website: website,
+                        facebook: facebook,
+                        instagram: instagram,
+                        twitter: twitter,
+                        youtube: youtube,
+                        linkedin: linkedin,
                         created_at: new Date(),
                         updated_at: new Date(),
                     }

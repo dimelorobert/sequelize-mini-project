@@ -4,8 +4,9 @@ const Joi = require('joi-plus');
 const JoiPhone = Joi.extend(require('joi-phone-number'));
 const sanitizeHtml = require('sanitize-html');
 const {
-    helper
+    helpers
 } = require('../helpers');
+
 
 module.exports = Joi.object().keys({
     image: Joi.any(),
@@ -109,7 +110,36 @@ module.exports = Joi.object().keys({
             'string.empty': 'El campo movil es obligatorio y no puede estar vacio'
         }),
 
-    website: Joi.string()
+    website: Joi.string().uri()
         .allow("")
         .trim()
+        .messages({
+            'string.uri': 'El campo website debe empezar por el indice de protocolo web \' https:// \' ',
+        }),
+
+    facebook: Joi.string()
+        .regex(/^(http:\/\/)?(https?:\/\/)facebook\.com\/.*$/)
+        .allow("")
+        .error(helpers.errorGenerator('El campo facebook debe tener esta estructura url \' https://facebook.com/tu-usuario.aqui \' ', 400)),
+
+    instagram: Joi.string()
+        .regex(/^(http:\/\/)?(https?:\/\/)instagram\.com\/.*$/)
+        .allow("")
+        .error(helpers.errorGenerator('El campo instagram debe tener esta estructura url \' https://instagram.com/tu-usuario.aqui \' ', 400)),
+
+    twitter: Joi.string()
+        .regex(/^(http:\/\/)?(https?:\/\/)twitter\.com\/.*$/)
+        .allow("")
+        .error(helpers.errorGenerator('El campo twitter debe tener esta estructura url \' https://twitter.com/tu-usuario.aqui \' ', 400)),
+
+    youtube: Joi.string()
+        .regex(/^(http:\/\/)?(https?:\/\/)youtube\.com\/.*$/)
+        .allow("")
+        .error(helpers.errorGenerator('El campo youtube debe tener esta estructura url \' https://youtube.com/tu-usuario.aqui \' ', 400)),
+
+    linkedin: Joi.string()
+        .regex(/^(http:\/\/)?(https?:\/\/)linkedin\/.in\/.com\/.*$/)
+        .allow("")
+        .error(helpers.errorGenerator('El campo linkedin debe tener esta estructura url \' https://linkedin.com/in/tu-usuario.aqui \' ', 400)),
+
 });
