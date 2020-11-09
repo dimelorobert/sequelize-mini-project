@@ -2,7 +2,9 @@
 
 //////////////// Modulos a usar /////////////////////////
 require('dotenv').config();
-const {PORT} = process.env;
+const {
+    PORT
+} = process.env;
 const express = require('express');
 const router = require('./routes');
 const bodyParser = require('body-parser');
@@ -45,13 +47,15 @@ app.use((error, request, response, next) => {
     response.status(error.httpCode || 500).send({
         message: error.message
     });
+    next();
 });
 
 // Middleware not found
-app.use((request, response) => {
+app.use((request, response, next) => {
     response.status(404).send({
         message: '❌ Page not found!😢'
     });
+    next();
 });
 
 //////////////// SERVER //////////////////////

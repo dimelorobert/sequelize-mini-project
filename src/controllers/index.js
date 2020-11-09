@@ -1,5 +1,11 @@
-const usersControllerCreate = require('./usersControllers/usersControllerCreate');
+const {
+     create,
+     list,
+     byId
+} = require('./users/usersControllers');
 
 module.exports = {
-     usersControllerCreate,
+     create,
+     list,
+     byId
 };

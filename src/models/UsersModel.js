@@ -65,6 +65,26 @@ const UsersModel = connectionDB.define('users', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    facebook: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    instagram: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    twitter: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    youtube: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    linkedin: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     created_at: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal('NOW()'),

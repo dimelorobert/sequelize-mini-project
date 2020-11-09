@@ -39,6 +39,7 @@ const helpers = {
 
     return savedFileName;
   },
+
   firstWordCapitalize: (word) => {
     return word.toLowerCase()
       .trim()
@@ -46,19 +47,30 @@ const helpers = {
       .map(v => v[0].toUpperCase() + v.substr(1))
       .join(' ');
   },
-  handleEmptyField: (variable) => {
-    if (variable === null || variable === "" || variable === undefined) {
 
+  handleEmptyField: (variable = 'sin especificar') => {
+    if (variable === null || variable === "" || variable === undefined) {
       variable = 'sin especificar';
     }
     return variable;
   },
+
   handleEmptyFieldArray: (variable) => {
     if (variable === null || variable === undefined || variable === "") {
       variable = 'Otro';
     }
     return variable;
-  }
+  },
+  createFolder: async (pathFolderName) => {
+    try {
+      await fs.mkdirSync(process.cwd() + `${pathFolderName}`, {
+        recursive: true
+      });
+      console.log(`Directorio creado con exito`);
+    } catch (error) {
+      return error;
+    }
+  },
 }
 module.exports = {
   helpers

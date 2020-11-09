@@ -19,27 +19,19 @@ const {
 } = require('../../models');
 
 // Importamos funciones Helpers :
-// firstWordCapitalize ( se encarga  de poner la primera letra de cada palabra en mayusculas)
-// handleEmptyField ( se encarga de gestinar los campos null || undefined  y los reemplaza por "Sin especificar")
+// handleEmptyFieldArray ( se encarga de gestinar los campos null || undefined  y los reemplaza por un default value que especificamos)
 // processAndSavePhoto ( se encarga de procesar el fileImage que vengan de front )
 const {
     helpers
 } = require('../../helpers');
-
-// importamos la conexion de sequelize y mysql
-const {
-    connectionDB
-} = require('../../config');
 
 // importamos
 const {
     Sequelize,
 } = require('sequelize');
 
-
 // Ubicación de la carpeta usuarios don de se alojaran los archivos
 const userImagePathDir = path.join(__dirname, `../../${USERS_UPLOADS_DIR}`);
-
 
 module.exports = {
     create: async (request, response, next) => {
@@ -64,25 +56,7 @@ module.exports = {
                 linkedin,
             } = request.body;
 
-            // Manejamos los nulls o undefined  de los campos no requeridos
-            // Formateamos info antes de guardarla en la base de datos
-            // Procesamos info evitando espacios al principio y al final, texto en mayusculas y demas...
-            name = helpers.firstWordCapitalize(name);
-            image = helpers.handleEmptyField(image);
-            surname = helpers.firstWordCapitalize(helpers.handleEmptyField(surname));
-            genre = helpers.handleEmptyFieldArray(genre);
-            company = helpers.firstWordCapitalize(helpers.handleEmptyField(company));
-            address = helpers.firstWordCapitalize(helpers.handleEmptyField(address));
-            email = helpers.handleEmptyField(email).toLowerCase();
-            phone = helpers.handleEmptyField(phone);
-            mobile = mobile.trim();
-            website = helpers.handleEmptyField(website).toLowerCase();
-            facebook = helpers.handleEmptyField(facebook).toLowerCase();
-            instagram = helpers.handleEmptyField(instagram).toLowerCase();
-            twitter = helpers.handleEmptyField(twitter).toLowerCase();
-            youtube = helpers.handleEmptyField(youtube).toLowerCase();
-            linkedin = helpers.handleEmptyField(linkedin).toLowerCase();
-
+            genre = await helpers.handleEmptyFieldArray(genre);
 
             // Procesamos la imagen que recibimos del lado del cliente, 3 parametros los cuales son (locationPath, fileImage, sizeImage)
             let savedFileName;
@@ -164,8 +138,54 @@ module.exports = {
         } catch (error) {
             // Si hay algún error lo mandamos al middleware de errores
             next(error);
-        } finally {
-            connectionDB.sync();
         }
     },
+    list: async (request, response, next) => {
+
+        try {
+            const users = await UsersModel.findAndCountAll();
+            if (users.count === 0 || users.count === null || users.count === undefined ||
+                users.rows === [] || users.rows === null || users.rows === undefined) {
+                return response.status(400).json({
+                    status: 400,
+                    errorNameEnglish: 'Bad request',
+                    errorNameSpanish: 'Solicitud incorrecta',
+                    message: `No existen usuarios aún en la lista`
+                });
+            }
+            response.send({
+                data: {
+                    users: users
+                },
+                message: `Hay ${users.count} usuario(s) en la lista`
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+    byId: async (request, response, next) => {
+        try {
+            const {
+                id
+            } = request.params;
+            const userById = await UsersModel.findOne({
+                where: {
+                    id: id,
+                }
+            });
+
+            if (!userById) {
+                // Salta al middleware de errores NOT FOUND setteado en el index del server de la app si no encuentra un usuario
+                return next();
+            }
+            response.send({
+                data: {
+                    users: userById,
+                },
+                message: `Se ha encontrado 1 usuario en la lista con el id especificado `
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
